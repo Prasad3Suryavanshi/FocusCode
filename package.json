@@ -1,0 +1,110 @@
+{
+	"name": "focuscode",
+	"displayName": "FocusCode",
+	"description": "Keep your focus on the active code block. Supports Python, C++, HTML, Go, React, and more to come.",
+	"version": "1.1.0",
+	"publisher": "localhost",
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"activationEvents": [
+		"onStartupFinished",
+		"onCommand:focus.switchToBlockLevel",
+		"onCommand:focus.switchToFixedLevel",
+		"onCommand:focus.turnOff",
+		"onCommand:focus.toggle"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "focus.switchToBlockLevel",
+				"title": "FocusCode: Switch To Block Level"
+			},
+			{
+				"command": "focus.switchToFixedLevel",
+				"title": "FocusCode: Switch To Fixed Level"
+			},
+			{
+				"command": "focus.turnOff",
+				"title": "FocusCode: Turn Off"
+			},
+			{
+				"command": "focus.toggle",
+				"title": "FocusCode: Toggle On/Off"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "focus.toggle",
+				"key": "ctrl+alt+f",
+				"mac": "cmd+alt+f",
+				"when": "editorTextFocus"
+			}
+		],
+		"configuration": [
+			{
+				"title": "FocusCode",
+				"properties": {
+					"focus.opacity": {
+						"type": "string",
+						"default": "0.7",
+						"pattern": "^(0(\\.\\d+)?|1(\\.0+)?)$",
+						"description": "Opacity of the out-of-focus lines, from 0 to 1 (e.g., 0.5, 0.85)."
+					},
+					"focus.opacityLight": {
+						"type": "string",
+						"default": "",
+						"pattern": "^$|^(0(\\.\\d+)?|1(\\.0+)?)$",
+						"description": "Opacity of out-of-focus lines in light themes. Leave empty to use focus.opacity."
+					},
+					"focus.opacityDark": {
+						"type": "string",
+						"default": "",
+						"pattern": "^$|^(0(\\.\\d+)?|1(\\.0+)?)$",
+						"description": "Opacity of out-of-focus lines in dark themes. Leave empty to use focus.opacity."
+					},
+					"focus.fadeDuration": {
+						"type": "integer",
+						"default": 0,
+						"minimum": 0,
+						"maximum": 5000,
+						"description": "Fade time in milliseconds (best effort, 0 disables)."
+					},
+					"focus.showStatusBar": {
+						"type": "boolean",
+						"default": true,
+						"description": "Show the FocusCode toggle in the status bar."
+					},
+					"focus.highlightRange": {
+						"type": "string",
+						"default": "block",
+						"enum": [
+							"block",
+							"fixed",
+							"none"
+						],
+						"description": "Highlight range",
+						"markdownEnumDescriptions": [
+							"Highlight the active code block (Works for Python, HTML, C++, etc.)",
+							"Fixed highlight of `#focus.highlightLines#` lines",
+							"Do not highlight any code"
+						]
+					},
+					"focus.highlightLines": {
+						"type": "integer",
+						"default": 5,
+						"minimum": 1,
+						"markdownDescription": "This configuration is only useful when `#focus.highlightRange#` is set to *fixed*. This means how many lines will be highlighted."
+					},
+					"focus.autoMatchLevel": {
+						"type": "integer",
+						"default": 1,
+						"minimum": 1,
+						"markdownDescription": "Sets which block level to focus on. `1` is the innermost block (e.g., an if statement). `2` is the parent block (e.g., the function containing it)."
+					}
+				}
+			}
+		]
+	}
+}
